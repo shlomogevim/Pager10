@@ -2,6 +2,8 @@ package com.sg.pager10.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageView
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.firebase.firestore.FirebaseFirestore
 import com.sg.pager10.adapters.PagerAdapter
 import com.sg.pager10.R
@@ -26,10 +28,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityMainBinding.inflate(layoutInflater)
+
         setContentView(binding.root)
 
         val posts =downloadAllPost()
-        pagerAdapterPost= PagerAdapterPost(posts)
+       // pagerAdapterPost= PagerAdapterPost(this,binding.mainLayout,posts)
+        val itemLayout =findViewById<ConstraintLayout>(R.id.itemLayout)
+        pagerAdapterPost= PagerAdapterPost(this,posts)
         binding.viewPager.adapter=pagerAdapterPost
 
      /*   val images = listOf(
