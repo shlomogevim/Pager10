@@ -12,13 +12,16 @@ import coil.load
 import com.sg.pager10.R
 import com.sg.pager10.drawing.CreatePost1
 import com.sg.pager10.drawing.CreatePost2
+import com.sg.pager10.drawing.CreatePost3
+import com.sg.pager10.drawing.PostGenerator
 import com.sg.pager10.model.Post
 import com.sg.pager10.utilities.Utility
 
 class PagerAdapterPost( context:Context,val posts:ArrayList<Post>): RecyclerView.Adapter<PagerAdapterPost.PagerViewHolder>(){
    // val layout: ConstraintLayout = (context as Activity).findViewById(R.id.itemLayout)
 
-    val createPost2= CreatePost2(context)
+  val createPost3= CreatePost3(context)
+    val postGenerator=PostGenerator(context)
     val util=Utility()
 
 
@@ -43,7 +46,8 @@ class PagerAdapterPost( context:Context,val posts:ArrayList<Post>): RecyclerView
 
    //         util.logi("pageAdapterPost 112  post=$post")
 
-       createPost2.drawPost1(post,layout)
+   createPost3.drawPost(post,layout)
+      //postGenerator.drawPost(post,layout)
        }
 
 
