@@ -1,28 +1,26 @@
 package com.sg.pager10.adapters
 
-import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import com.sg.pager10.R
-import com.sg.pager10.drawing.CreatePost1
-import com.sg.pager10.drawing.CreatePost2
-import com.sg.pager10.drawing.CreatePost3
-import com.sg.pager10.drawing.PostGenerator
+import com.sg.pager10.drawingPost.DrawPost
 import com.sg.pager10.model.Post
 import com.sg.pager10.utilities.Utility
+import java.util.*
+import kotlin.collections.ArrayList
 
 class PagerAdapterPost( context:Context,val posts:ArrayList<Post>): RecyclerView.Adapter<PagerAdapterPost.PagerViewHolder>(){
    // val layout: ConstraintLayout = (context as Activity).findViewById(R.id.itemLayout)
 
-  val createPost3= CreatePost3(context)
-    val postGenerator=PostGenerator(context)
+ val drawPost= DrawPost(context)
+  //  val postGenerator=PostGenerator(context)
     val util=Utility()
+
+
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagerViewHolder {
@@ -32,30 +30,49 @@ class PagerAdapterPost( context:Context,val posts:ArrayList<Post>): RecyclerView
 
     override fun onBindViewHolder(holder: PagerViewHolder, position: Int) {
       holder.bindImage(posts[position])
-
     }
+
+
+
 
     override fun getItemCount()=posts.size
 
+
+
+
+
+    /*public int getItemPosition(Object object) {
+    return POSITION_NONE;
+}*/
+
     inner class PagerViewHolder( itemView: View): RecyclerView.ViewHolder(itemView){
-        val postImage = itemView?.findViewById<ImageView>(R.id.pagerImage)
-        val layout = itemView?.findViewById<ConstraintLayout>(R.id.itemLayout)
+        //val postImage = itemView?.findViewById<ImageView>(R.id.pagerImage)
+
+
+
+       /* fun bindImage(post:Post){
+            drawPost.drawPost(post,layout)
+        }*/
 
         fun bindImage(post:Post){
-     //  postImage.load(post.imageUri)
+            val layout = itemView?.findViewById<ConstraintLayout>(R.id.itemLayout)
 
-   //         util.logi("pageAdapterPost 112  post=$post")
-
-   createPost3.drawPost(post,layout)
-      //postGenerator.drawPost(post,layout)
-       }
-
-
-
-
+                  drawPost.drawPost(post,layout)
+        }
     }
-
 }
+
+
+
+
+
+
+/*   fun bindImage(post:Post){
+  //  postImage.load(post.imageUri)
+//         util.logi("pageAdapterPost 112  post=$post")
+drawPost.drawPost(post,layout)
+   //postGenerator.drawPost(post,layout)
+    }*/
 
 /*  fun bindImage(post:Post){
         // postImage.setImageResource(imageRes)

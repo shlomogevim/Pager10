@@ -2,12 +2,9 @@ package com.sg.pager10.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ImageView
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.firebase.firestore.FirebaseFirestore
-import com.sg.pager10.adapters.PagerAdapter
-import com.sg.pager10.R
 import com.sg.pager10.adapters.PagerAdapterPost
+import com.sg.pager10.adapters.PostAdapter
 import com.sg.pager10.databinding.ActivityMainBinding
 import com.sg.pager10.model.Post
 import com.sg.pager10.utilities.POST_REF
@@ -20,33 +17,15 @@ class MainActivity : AppCompatActivity() {
 
     val util1 = Utility()
     val posts= ArrayList<Post>()
-    lateinit var pagerAdapterPost:PagerAdapterPost
-
-
-
+    lateinit var pagerAdapterPost:PostAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityMainBinding.inflate(layoutInflater)
-
         setContentView(binding.root)
-
         val posts =downloadAllPost()
-       // pagerAdapterPost= PagerAdapterPost(this,binding.mainLayout,posts)
-        val itemLayout =findViewById<ConstraintLayout>(R.id.itemLayout)
-        pagerAdapterPost= PagerAdapterPost(this,posts)
-        binding.viewPager.adapter=pagerAdapterPost
-
-     /*   val images = listOf(
-            R.drawable.a,
-            R.drawable.b,
-            R.drawable.c,
-            R.drawable.d,
-            R.drawable.e
-        )
-        val adapter = PagerAdapter(images)
-        binding.viewPager.adapter = adapter*/
-
+       pagerAdapterPost= PostAdapter(this,posts)
+       binding.viewPager.adapter=pagerAdapterPost
     }
 
     fun downloadAllPost() :ArrayList<Post>{
@@ -58,12 +37,37 @@ class MainActivity : AppCompatActivity() {
                     var  post = util1.retrivePostFromFirestore(doc)
                     posts.add(post)
                 }
-                pagerAdapterPost.notifyDataSetChanged()
+             pagerAdapterPost.notifyDataSetChanged()
             }
         }
         return posts
     }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*   val images = listOf(
+       R.drawable.a,
+       R.drawable.b,
+       R.drawable.c,
+       R.drawable.d,
+       R.drawable.e
+   )
+   val adapter = PagerAdapter(images)
+   binding.viewPager.adapter = adapter*/
 
 /*   viewPager.beginFakeDrag()
          viewPager.fakeDragBy(-10f)
