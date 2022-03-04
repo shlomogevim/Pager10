@@ -3,7 +3,6 @@ package com.sg.pager10.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.firebase.firestore.FirebaseFirestore
-import com.sg.pager10.adapters.PagerAdapterPost
 import com.sg.pager10.adapters.PostAdapter
 import com.sg.pager10.databinding.ActivityMainBinding
 import com.sg.pager10.model.Post
@@ -30,7 +29,6 @@ class MainActivity : AppCompatActivity() {
 
     fun downloadAllPost() :ArrayList<Post>{
         posts.clear()
-
         FirebaseFirestore.getInstance().collection(POST_REF).addSnapshotListener { value, error ->
             if (value != null) {
                 for (doc in value.documents) {
