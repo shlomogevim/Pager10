@@ -23,5 +23,22 @@ const val POST_RADIUS="post_radius"
 const val POST_REF_STAM="Posts Stam"
 const val POST_IMAGE_STAM="Posts Image Stam"
 
+const val SHARPREF_REF="POST_PREF"
+
+const val DETAIL_POST_EXSTRA="detail_post_exstra"
+
+const val USER_REF="users"
+const val FIRESTORE_USER_ID="user uid"
+const val USER_ID="userId"
+const val USER_FULLNAME="full name"
+const val USER_USERNAME="user name"
+const val USER_EMAIL="user email"
+const val USER_PASSWORD="user password"
+const val USER_BIO="user bio"
+const val USER_IMAGE="user image"
+const val USER_TIME="user time"
+const val USER_IDEXSRTA="user_idexstra"
+const val USER_USERNAMEEXSRTA="user_usernameexstra"
+
 
 

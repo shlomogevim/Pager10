@@ -8,6 +8,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.sg.pager10.R
 import com.sg.pager10.model.Post
+import com.sg.pager10.model.User
 
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -15,6 +16,24 @@ import kotlin.collections.HashMap
 
 class Utility {
 
+    fun convertToUser(snap: DocumentSnapshot?): User {
+        var userName = "no userName"
+        var fullName = "no fullName"
+        var email: String = "no email"
+        var profileImage =
+            "https://firebasestorage.googleapis.com/v0/b/social55firestore.appspot.com/o/Default%20Images%2Fprofile.png?alt=media&token=4a02bf76-8cc4-43e7-9750-930176c9c9ee"
+        var dio: String = "no dio"
+        var uid: String = "no uid"
+        userName = snap?.getString(USER_USERNAME).toString()
+        fullName = snap?.getString(USER_FULLNAME).toString()
+        email = snap?.getString(USER_EMAIL).toString()
+        profileImage = snap?.getString(USER_IMAGE).toString()
+        dio = snap?.getString(USER_BIO).toString()
+        uid = snap?.getString(FIRESTORE_USER_ID).toString()
+
+        val newUser = User(userName, fullName, email, profileImage, dio, uid)
+        return newUser
+    }
 
 
     fun downloadPost1(context:Context,index:Int) {
@@ -48,13 +67,6 @@ class Utility {
         val postPadding: ArrayList<Int> = convertFromStringArrayToIntArry(postPadding1)
         val postMargin1 = snap?.getString(POST_MARGIN).toString()
         val postMargin: ArrayList<ArrayList<Int>> = convertFromStringArrayToIntArry2(postMargin1)
-
-        /* val postMargin = arrayListOf(
-             arrayListOf(0, 0, 0, -1),
-             arrayListOf(0, 100, 0, -1),
-             arrayListOf(0, 200, 0, -1)
-         )*/
-
 
         val newPost1 = Post(
             postId,
