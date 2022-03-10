@@ -2,8 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sg.pager10">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
+
+
+   <!-- <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
+
+
 
     <application
         android:allowBackup="true"
@@ -13,9 +19,9 @@
         android:supportsRtl="false"
         android:theme="@style/Theme.Pager10">
         <activity
-            android:name=".activities.DemiSiginInActivit"
+            android:name=".activities.AccountSettingActivity"
             android:exported="false" />
-        <activity
+          <activity
             android:name=".activities.SignInActivity"
             android:exported="false" />
         <activity
