@@ -39,13 +39,10 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11.toString()
     }
-
-
-
-
     buildFeatures{
         viewBinding true
     }
+
 }
 
 dependencies {
@@ -66,7 +63,11 @@ dependencies {
   implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.google.firebase:firebase-storage-ktx:20.0.0'
 
-    implementation 'com.github.CanHub:Android-Image-Cropper:4.1.0'
+ //implementation 'com.github.CanHub:Android-Image-Cropper:4.1.0'
+
+    implementation 'androidx.activity:activity-ktx:1.4.0'
+
+    api 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
 
 
 
