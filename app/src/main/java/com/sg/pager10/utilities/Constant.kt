@@ -40,5 +40,11 @@ const val USER_TIME="user time"
 const val USER_IDEXSRTA="user_idexstra"
 const val USER_USERNAMEEXSRTA="user_usernameexstra"
 
+const val COMMENT_REF="Comments"
+const val COMMENT_LIST="Comment List"
+const val COMMENT_TEXT="comment_text"
+const val COMMENT_USER_NAME="comment_user_name"
+const val COMMENT_USER_ID="comment_user_id"
+const val COMMENT_POST_NUM="comment_post_id"
 
 

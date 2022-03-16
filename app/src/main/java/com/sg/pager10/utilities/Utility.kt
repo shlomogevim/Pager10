@@ -1,12 +1,12 @@
 package com.sg.pager10.utilities
 
-import android.app.Activity
 import android.content.Context
 import android.util.Log
-import androidx.constraintlayout.widget.ConstraintLayout
+import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import com.sg.pager10.R
+import com.sg.pager10.model.Comment
 import com.sg.pager10.model.Post
 import com.sg.pager10.model.User
 
@@ -15,6 +15,8 @@ import kotlin.collections.HashMap
 
 
 class Utility {
+
+    val currentUser=FirebaseAuth.getInstance().currentUser
 
     fun convertToUser(snap: DocumentSnapshot?): User {
         var userName = "no userName"
@@ -47,6 +49,39 @@ class Utility {
                   //  createPost1.drawPost(post)
                 }
             }
+        /*FirebaseUser*/
+    }
+  fun createComment( post: Post,commentText: String) {
+     /* val data=HashMap<String,Any>()
+      data[COMMENT_USER_ID]=currentUser?.uid.toString()
+      data[COMMENT_TEXT]=commentText
+      data[COMMENT_POST_NUM]=post.postNum
+      FirebaseFirestore.getInstance().collection(COMMENT_REF).document(currentUser?.uid.toString())
+          .collection(COMMENT_LIST).add(data)*/
+
+      val data=HashMap<String,Any>()
+      data[COMMENT_TEXT]=commentText
+      data[COMMENT_USER_NAME]=currentUser?.displayName.toString()
+      data[COMMENT_USER_ID]=currentUser?.uid.toString()
+      data[COMMENT_POST_NUM]=post.postNum
+      FirebaseFirestore.getInstance().collection(COMMENT_REF).document(post.postNum.toString())
+          .collection(COMMENT_LIST).add(data)
+    }
+
+    /*const val COMMENT_REF="Comments"
+const val COMMENT_LIST="Comment List"
+const val COMMENT_TEXT="comment_text"
+const val COMMENT_USER_NAME="comment_user_name"
+const val COMMENT_USER_ID="comment_user_id"
+const val COMMENT_POST_NUM="comment_post_id"*/
+
+    fun retriveCommentFromFirestore(snap: DocumentSnapshot?): Comment {
+        val comText=snap?.get(COMMENT_TEXT).toString()
+        val comUserName=snap?.get(COMMENT_USER_NAME).toString()
+        val comUserId=snap?.get(COMMENT_USER_ID).toString()
+        val comPostNum=snap?.getLong(COMMENT_POST_NUM)!!.toInt()
+        val newComment=Comment(comText,comUserName,comUserId,comPostNum)
+        return newComment
     }
 
     fun retrivePostFromFirestore(snap: DocumentSnapshot?): Post {
@@ -86,7 +121,43 @@ class Utility {
         //logi("Utility 207   post=${newPost1}")
         return newPost1
     }
+    suspend fun retrivePostFromFirestore1(snap: DocumentSnapshot?): Post {
+        val postId = snap?.get(POST_ID).toString()
+        val postNum = snap?.getLong(POST_NUM)!!.toInt()
+        val lineNum = snap?.getLong(POST_LINE_NUM)!!.toInt()
+        val imageUri = snap?.getString(POST_IMAGE_URI).toString()
+        val postText: ArrayList<String> = snap?.get(POST_TEXT) as ArrayList<String>
+        val postBackground = snap?.getString(POST_BACKGROUND).toString()
+        val postTranparency = snap?.getLong(POST_TRANPARECY)!!.toInt()
+        val postTextColor: ArrayList<String> = snap?.get(POST_TEXT_COLOR) as ArrayList<String>
+        val postFontFamily = snap?.getLong(POST_FONT_FAMILY)!!.toInt()
+        val postRadius = snap?.getLong(POST_RADIUS)!!.toInt()
 
+        val postTextSize1 = snap?.getString(POST_TEXT_SIZE).toString()
+        val postTextSize: ArrayList<Int> = convertFromStringArrayToIntArry(postTextSize1)
+        val postPadding1 = snap?.getString(POST_PADDING).toString()
+        val postPadding: ArrayList<Int> = convertFromStringArrayToIntArry(postPadding1)
+        val postMargin1 = snap?.getString(POST_MARGIN).toString()
+        val postMargin: ArrayList<ArrayList<Int>> = convertFromStringArrayToIntArry2(postMargin1)
+
+        val newPost1 = Post(
+            postId,
+            postNum,
+            lineNum,
+            imageUri,
+            postText,
+            postMargin,
+            postBackground,
+            postTranparency,
+            postTextSize,
+            postPadding,
+            postTextColor,
+            postFontFamily,
+            postRadius
+        )
+        //logi("Utility 207   post=${newPost1}")
+        return newPost1
+    }
     private fun convertFromStringArrayToIntArry(str: String): ArrayList<Int> {
         var newAr = ArrayList<Int>()
         return littleHelper(str, newAr)
@@ -129,12 +200,6 @@ class Utility {
 
 
         }
-
-
-
-
-
-
 
         return bigArray
     }
@@ -427,6 +492,9 @@ class Utility {
             .set(data)
     }
 
+    fun toasti(context: Context,str:String){
+        Toast.makeText(context,str,Toast.LENGTH_LONG).show()
+    }
     fun logi(
         element1: String,
         element2: String = "",
@@ -447,4 +515,26 @@ class Utility {
         }
     }
 
-   }
+    suspend fun logi1(
+        element1: String,
+        element2: String = "",
+        element3: String = "",
+        element4: String = ""
+    ) {
+        if (element1 != "" && element2 == "" && element3 == "" && element4 == "") {
+            Log.d("gg", "${element1}")
+        }
+        if (element1 != "" && element2 != "" && element3 == "" && element4 == "") {
+            Log.d("gg", "${element1} ,${element2}")
+        }
+        if (element1 != "" && element2 != "" && element3 != "" && element4 == "") {
+            Log.d("gg", "${element1} ,${element2} ,${element3}")
+        }
+        if (element1 != "" && element2 != "" && element3 != "" && element4 != "") {
+            Log.d("gg", "${element1} ,${element2} ${element3},${element4}")
+        }
+    }
+
+
+
+}

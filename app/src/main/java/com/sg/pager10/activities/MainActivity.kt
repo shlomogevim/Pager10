@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.sg.pager10.adapters.PostAdapter
 import com.sg.pager10.animation.BookFlipPageTransformer2
@@ -26,10 +28,14 @@ class MainActivity : AppCompatActivity() {
     val posts = ArrayList<Post>()
     lateinit var postAdapter: PostAdapter
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
+
         val posts = downloadAllPost()
         val pager = binding.viewPager
         postAdapter = PostAdapter(pager, this, posts)
@@ -41,7 +47,7 @@ class MainActivity : AppCompatActivity() {
 
     fun downloadAllPost(): ArrayList<Post> {
         posts.clear()
-        FirebaseFirestore.getInstance().collection(POST_REF).addSnapshotListener { value, error ->
+         FirebaseFirestore.getInstance().collection(POST_REF).addSnapshotListener { value, error ->
             if (value != null) {
                 for (doc in value.documents) {
                     var post = util1.retrivePostFromFirestore(doc)
