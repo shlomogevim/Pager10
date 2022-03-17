@@ -45,6 +45,7 @@ const val COMMENT_LIST="Comment List"
 const val COMMENT_TEXT="comment_text"
 const val COMMENT_USER_NAME="comment_user_name"
 const val COMMENT_USER_ID="comment_user_id"
-const val COMMENT_POST_NUM="comment_post_id"
+const val COMMENT_POST_ID="comment_post_id"
+const val COMMENT_ID="comment_id"
 
 

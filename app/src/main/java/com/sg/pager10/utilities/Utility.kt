@@ -1,8 +1,11 @@
 package com.sg.pager10.utilities
 
 import android.content.Context
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.util.Log
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.core.content.ContextCompat.getSystemService
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
@@ -51,38 +54,42 @@ class Utility {
             }
         /*FirebaseUser*/
     }
-  fun createComment( post: Post,commentText: String) {
-     /* val data=HashMap<String,Any>()
-      data[COMMENT_USER_ID]=currentUser?.uid.toString()
-      data[COMMENT_TEXT]=commentText
-      data[COMMENT_POST_NUM]=post.postNum
-      FirebaseFirestore.getInstance().collection(COMMENT_REF).document(currentUser?.uid.toString())
-          .collection(COMMENT_LIST).add(data)*/
 
+
+
+    fun createComment( post: Post,commentText: String) {
       val data=HashMap<String,Any>()
+      data[COMMENT_ID]="1"
+      data[COMMENT_POST_ID]=post.postNum.toString()
       data[COMMENT_TEXT]=commentText
       data[COMMENT_USER_NAME]=currentUser?.displayName.toString()
       data[COMMENT_USER_ID]=currentUser?.uid.toString()
-      data[COMMENT_POST_NUM]=post.postNum
-      FirebaseFirestore.getInstance().collection(COMMENT_REF).document(post.postNum.toString())
-          .collection(COMMENT_LIST).add(data)
+      val ref=FirebaseFirestore.getInstance().collection(COMMENT_REF).document(post.postNum.toString())
+          .collection(COMMENT_LIST)
+          ref.add(data)
+          .addOnSuccessListener {
+              data[COMMENT_ID]=it.id
+              ref.document(it.id).update(data)
+          }
     }
 
-    /*const val COMMENT_REF="Comments"
-const val COMMENT_LIST="Comment List"
-const val COMMENT_TEXT="comment_text"
-const val COMMENT_USER_NAME="comment_user_name"
-const val COMMENT_USER_ID="comment_user_id"
-const val COMMENT_POST_NUM="comment_post_id"*/
+    fun deleteComment(comment: Comment) {
+      //  logi("Utility 111      comment.postId=${comment.postId}           comment.commntId=${comment.commntId}")
+       FirebaseFirestore.getInstance().collection(COMMENT_REF).document(comment.postId)
+            .collection(COMMENT_LIST).document(comment.commntId).delete()
+    }
+
 
     fun retriveCommentFromFirestore(snap: DocumentSnapshot?): Comment {
+        val comId=snap?.get(COMMENT_ID).toString()
+        val postId=snap?.get(COMMENT_POST_ID).toString()
         val comText=snap?.get(COMMENT_TEXT).toString()
         val comUserName=snap?.get(COMMENT_USER_NAME).toString()
         val comUserId=snap?.get(COMMENT_USER_ID).toString()
-        val comPostNum=snap?.getLong(COMMENT_POST_NUM)!!.toInt()
-        val newComment=Comment(comText,comUserName,comUserId,comPostNum)
+        val newComment=Comment(comId,postId,comText,comUserName,comUserId)
         return newComment
     }
+
 
     fun retrivePostFromFirestore(snap: DocumentSnapshot?): Post {
         val postId = snap?.get(POST_ID).toString()
@@ -534,6 +541,7 @@ const val COMMENT_POST_NUM="comment_post_id"*/
             Log.d("gg", "${element1} ,${element2} ${element3},${element4}")
         }
     }
+
 
 
 
