@@ -13,5 +13,6 @@ data class Post1(
     var postPadding:ArrayList<Int> = arrayListOf<Int>(),
     var postTextColor:ArrayList<String> = arrayListOf<String>(),
     var postFontFamily:Int=0,
-    var postRadiuas:Int=0
+    var postRadiuas:Int=0,
+    var time:Int=0
 )
