@@ -1,5 +1,10 @@
 package com.sg.pager10.utilities
 
+const val SHAR_PREF="char_pref"
+const val CURRENT_USER_EXIST="current_user_exist"
+const val EXIST="exist"
+const val NOT_EXIST="not_exist"
+
 const val CONSTANT="constant"
 const val NOT_CONSTANT="notConstant"
 

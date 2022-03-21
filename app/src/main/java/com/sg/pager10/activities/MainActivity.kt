@@ -1,5 +1,6 @@
 package com.sg.pager10.activities
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -15,8 +16,7 @@ import com.sg.pager10.animation.BookFlipPageTransformer2
 import com.sg.pager10.animation.CardFlipPageTransformer2
 import com.sg.pager10.databinding.ActivityMainBinding
 import com.sg.pager10.model.Post
-import com.sg.pager10.utilities.POST_REF
-import com.sg.pager10.utilities.Utility
+import com.sg.pager10.utilities.*
 import java.lang.Math.abs
 import java.util.ArrayList
 
@@ -24,9 +24,10 @@ import java.util.ArrayList
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
 
-    val util1 = Utility()
+    val util = Utility()
     val posts = ArrayList<Post>()
     lateinit var postAdapter: PostAdapter
+    private var currentUser: FirebaseUser?=null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,11 +37,17 @@ class MainActivity : AppCompatActivity() {
 
 
 
+        val pref=getSharedPreferences(SHAR_PREF,Context.MODE_PRIVATE).edit()
+        pref.putString(CURRENT_USER_EXIST, NOT_EXIST)
+        pref.apply()
+
+
         val posts = downloadAllPost()
         val pager = binding.viewPager
         postAdapter = PostAdapter(pager, this, posts)
         pager.adapter = postAdapter
         addAnimation(pager)
+
 
 
     }
@@ -50,7 +57,7 @@ class MainActivity : AppCompatActivity() {
          FirebaseFirestore.getInstance().collection(POST_REF).addSnapshotListener { value, error ->
             if (value != null) {
                 for (doc in value.documents) {
-                    var post = util1.retrivePostFromFirestore(doc)
+                    var post = util.retrivePostFromFirestore(doc)
                     posts.add(post)
                 }
                 postAdapter.notifyDataSetChanged()
