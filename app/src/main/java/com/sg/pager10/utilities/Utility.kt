@@ -1,7 +1,9 @@
 package com.sg.pager10.utilities
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
+import android.content.DialogInterface
 import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -9,6 +11,7 @@ import androidx.core.content.ContextCompat.getSystemService
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.sg.pager10.R
 import com.sg.pager10.model.Comment
 import com.sg.pager10.model.Post
 import com.sg.pager10.model.User
@@ -20,6 +23,7 @@ import kotlin.collections.HashMap
 class Utility {
 
     val currentUser=FirebaseAuth.getInstance().currentUser
+
 
     fun convertToUser(snap: DocumentSnapshot?): User {
         var userName = "no userName"
